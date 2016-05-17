@@ -103,7 +103,7 @@ namespace Kyleen_Project
 
                         for (index = 0; index < groupList.Count(); index++)
                         {
-                            if (groupName == groupList[index].getName())
+                            if (groupName == groupList[index].name)
                             {
                                 groupIndex = index;
                                 break;
@@ -122,9 +122,9 @@ namespace Kyleen_Project
                         //if so, add seminar and cost to that participant
                         Group thisGroup = groupList[groupIndex];
                         participantIndex = -1;
-                        for (index = 0; index < thisGroup.totalParticipants(); index++)
+                        for (index = 0; index < thisGroup.participantList.Count(); index++)
                         {
-                            if (thisGroup.getParticipant(index).getName() == name)
+                            if (thisGroup.participantList[index].name == name)
                             {
                                 participantIndex = index;
                                 break;
@@ -133,15 +133,15 @@ namespace Kyleen_Project
                         if (participantIndex == -1)
                         {
                             Participant newParticipant = new Participant(name, groupName);
-                            thisGroup.addParticipant(newParticipant);
-                            participantIndex = thisGroup.totalParticipants() - 1;
+                            thisGroup.participantList.Add(newParticipant);
+                            participantIndex = thisGroup.participantList.Count() - 1;
                         }//end check participants
 
-                        thisGroup.getParticipant(participantIndex).addSeminar(seminar);
+                        thisGroup.participantList[participantIndex].seminarList.Add(seminar);
 
                         if (seminarList.TryGetValue(seminar, out seminarCost))
                         {
-                            thisGroup.getParticipant(participantIndex).addCost(seminarCost);
+                            thisGroup.participantList[participantIndex].totalCost += seminarCost;
                         }
                         else
                         {
@@ -150,7 +150,7 @@ namespace Kyleen_Project
                                 var result = form.ShowDialog();
                                 if (result == DialogResult.OK)
                                 {
-                                    thisGroup.getParticipant(participantIndex).addCost(form.input);
+                                    thisGroup.participantList[participantIndex].totalCost += form.input;
                                 }
                             }
                             
@@ -162,7 +162,7 @@ namespace Kyleen_Project
                     cmbGroups.Items.Clear();
                     foreach (Group thisGroup in groupList)
                     {
-                        cmbGroups.Items.Add(thisGroup.getName());
+                        cmbGroups.Items.Add(thisGroup.name);
                     }
                     cmbGroups.SelectedIndex = 0;
                     //cmbGroups_SelectedIndexChanged(sender, e);
@@ -182,9 +182,9 @@ namespace Kyleen_Project
         {
             lstParticipants.Items.Clear();
             Group thisGroup = groupList[cmbGroups.SelectedIndex];
-            for (int index = 0; index < thisGroup.totalParticipants(); index++)
+            for (int index = 0; index < thisGroup.participantList.Count(); index++)
             {
-                lstParticipants.Items.Add(thisGroup.getParticipant(index).getName());
+                lstParticipants.Items.Add(thisGroup.participantList[index].name);
             }
 
             lstParticipants.SelectedIndex = 0;
@@ -193,14 +193,14 @@ namespace Kyleen_Project
         private void lstParticipants_SelectedIndexChanged(object sender, EventArgs e)
         {
             lstSeminars.Items.Clear();
-            Participant thisParticipant = groupList[cmbGroups.SelectedIndex].getParticipant(lstParticipants.SelectedIndex);
-            for (int index = 0; index < thisParticipant.totalSeminars(); index++)
+            Participant thisParticipant = groupList[cmbGroups.SelectedIndex].participantList[lstParticipants.SelectedIndex];
+            for (int index = 0; index < thisParticipant.seminarList.Count(); index++)
             {
-                lstSeminars.Items.Add(thisParticipant.getSeminar(index));
+                lstSeminars.Items.Add(thisParticipant.seminarList[index]);
             }
 
-            lblNumSeminars.Text = thisParticipant.totalSeminars().ToString();
-            lblTotalCost.Text = thisParticipant.getTotalCost().ToString("C2");
+            lblNumSeminars.Text = thisParticipant.seminarList.Count.ToString();
+            lblTotalCost.Text = thisParticipant.totalCost.ToString("C2");
             if (validAmountPaid)
                 fillSavingsBoxes();
 
@@ -237,16 +237,16 @@ namespace Kyleen_Project
                 for (group = 0; group < groupList.Count(); group++)
                 {
                     Group thisGroup = groupList[group];
-                    thisGroup.setAmountSaved(0);
-                    for (participant = 0; participant < thisGroup.totalParticipants(); participant++)
+                    thisGroup.amountSaved = 0;
+                    for (participant = 0; participant < thisGroup.participantList.Count(); participant++)
                     {
-                        Participant thisParticipant = thisGroup.getParticipant(participant);
-                        double amountSaved = thisParticipant.getTotalCost() - amountPaid;
-                        thisParticipant.setAmountSaved(amountSaved);
-                        thisGroup.addSavings(amountSaved);
+                        Participant thisParticipant = thisGroup.participantList[participant];
+                        double amountSaved = thisParticipant.totalCost - amountPaid;
+                        thisParticipant.amountSaved = amountSaved;
+                        thisGroup.amountSaved += amountSaved;
                         
                     }
-                    clientSaved += thisGroup.getAmountSaved();
+                    clientSaved += thisGroup.amountSaved;
                     
                 }
 
@@ -260,10 +260,10 @@ namespace Kyleen_Project
         private void fillSavingsBoxes()
         {
             Group selectedGroup = groupList[cmbGroups.SelectedIndex];
-            Participant selectedParticipant = selectedGroup.getParticipant(lstParticipants.SelectedIndex);
+            Participant selectedParticipant = selectedGroup.participantList[lstParticipants.SelectedIndex];
 
-            lblParticipantSaved.Text = selectedParticipant.getAmountSaved().ToString("C2");
-            lblGroupSaved.Text = selectedGroup.getAmountSaved().ToString("C2");
+            lblParticipantSaved.Text = selectedParticipant.amountSaved.ToString("C2");
+            lblGroupSaved.Text = selectedGroup.amountSaved.ToString("C2");
             lblClientSaved.Text = clientSaved.ToString("C2");
         }
 
