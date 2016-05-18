@@ -11,7 +11,6 @@ namespace Kyleen_Project
         public string name { get; set; }
         public string group { get; set; }
         public double totalCost { get; set; }
-        public double amountSaved { get; set; }
         public List<string> seminarList { get; set; }
 
         public Participant()
@@ -23,7 +22,6 @@ namespace Kyleen_Project
             group = partGroup;
             seminarList = new List<string>();
             totalCost = 0;
-            amountSaved = 0;
         }
 
     }

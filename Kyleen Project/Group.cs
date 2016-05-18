@@ -9,7 +9,8 @@ namespace Kyleen_Project
     class Group
     {
         public string name { get; set; }     
-        public double amountSaved { get; set; }
+        public double totalCost { get; set; }
+        public int numberSeminars { get; set; }
         public List<Participant> participantList { get; set; }
 
         public Group() { }
@@ -17,7 +18,8 @@ namespace Kyleen_Project
         {
             name = groupName;
             participantList = new List<Participant>();
-            amountSaved = 0;
+            totalCost = 0;
+            numberSeminars = 0;
         }
      
     }

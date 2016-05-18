@@ -16,21 +16,37 @@ namespace Kyleen_Project
         List<Group> groupList = new List<Group>();
         Dictionary<string, double> seminarList = new Dictionary<string, double>();
 
-        double clientSaved = 0;
+        //vaiables for client
+        double clientNumberParticipants;
+        double clientNumberSeminars;
+        double clientTotalCost;
+        //double clientSaved = 0;
+        
         bool validAmountPaid;
+        string seminarFile = @"seminar costs.csv";
 
         public frmMain()
         {
-            InitializeComponent();
+            InitializeComponent(); 
+        } 
 
-            double seminarCost = 0;
-
-            //read seminar costs from file into dictionary
-            using (StreamReader sr = new StreamReader(@"..\..\seminar costs.csv"))
+        private void form_OnLoad(object sender, EventArgs e)
+        {
+            //check to make sure the seminar costs file exists, and close application if it doesn't
+            if (!File.Exists(seminarFile))
             {
-               while (sr.Peek() >= 0)
-               {
-                    var line = sr.ReadLine();
+                MessageBox.Show("File \"seminar costs.csv\" is missing, please replace or create it and restart application", "seminar costs file missing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+            else //read seminar costs from file into dictionary
+            {
+                double seminarCost = 0;
+                int lineIndex = -1;
+          
+                string[] fileLines = File.ReadAllLines(seminarFile);
+                foreach (string line in fileLines)
+                {
+                    lineIndex += 1;
                     var values = line.Split(',');
 
                     Double.TryParse(values[1], out seminarCost);
@@ -43,27 +59,23 @@ namespace Kyleen_Project
                             if (result == DialogResult.OK)
                             {
                                 seminarCost = form.input;
+                                var saveToFile = MessageBox.Show("Would you like to change the file to this amount?", "Save to file?", MessageBoxButtons.YesNo);
+                                if (saveToFile == DialogResult.Yes)
+                                {
+                                    fileLines[lineIndex] = values[0] + "," + seminarCost;
+                                    File.WriteAllLines(seminarFile, fileLines);
+                                }
                             }
                         }
                     }
 
                     seminarList.Add(values[0], seminarCost);
-                }
 
+                } //end iterating through fileLines
             } //end read seminar costs
+        } //end form_OnLoad()
 
-        } //end frmMain()
-
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit?", MessageBoxButtons.YesNo);
-            if (result == System.Windows.Forms.DialogResult.Yes)
-            {
-                this.Close();
-            }
-        }
-
-        private void bthOpenFile_Click(object sender, EventArgs e)
+        private void btnOpenFile_Click(object sender, EventArgs e)
         {
             string name;
             string groupName;
@@ -74,13 +86,13 @@ namespace Kyleen_Project
             double seminarCost; 
 
             groupList.Clear();
+            clientNumberParticipants = 0;
+            clientNumberSeminars = 0;
+            clientTotalCost = 0;
 
+            //get information on particiapnts from file seleted by user
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
-
-            openFileDialog1.InitialDirectory = "c:\\";
-            openFileDialog1.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
-            openFileDialog1.FilterIndex = 1;
-            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.Filter = "csv files (*.csv)|*.csv";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -95,10 +107,8 @@ namespace Kyleen_Project
                         groupName = values[2];
                         seminar = values[3];
 
-
                         //search to see if group is already in list
                         //and if not, add it
-                        //and in eiter case add participant
                         groupIndex = -1;
 
                         for (index = 0; index < groupList.Count(); index++)
@@ -135,46 +145,75 @@ namespace Kyleen_Project
                             Participant newParticipant = new Participant(name, groupName);
                             thisGroup.participantList.Add(newParticipant);
                             participantIndex = thisGroup.participantList.Count() - 1;
-                        }//end check participants
+                        }
 
                         thisGroup.participantList[participantIndex].seminarList.Add(seminar);
 
-                        if (seminarList.TryGetValue(seminar, out seminarCost))
+                        if (!seminarList.TryGetValue(seminar, out seminarCost))
                         {
-                            thisGroup.participantList[participantIndex].totalCost += seminarCost;
-                        }
-                        else
-                        {
-                            using (var form = new frmInput("Seminar \"" + seminar + "\" not present in seminar cost file.", "Please enter a valid cost for this seminar"))
+                            using (var inputForm = new frmInput("Seminar \"" + seminar + "\" not present in seminar cost file.", "Please enter a valid cost for this seminar"))
                             {
-                                var result = form.ShowDialog();
-                                if (result == DialogResult.OK)
+                                var inputResult = inputForm.ShowDialog();
+                                if (inputResult == DialogResult.OK)
                                 {
-                                    thisGroup.participantList[participantIndex].totalCost += form.input;
+                                    seminarCost = inputForm.input;
+                                    seminarList.Add(seminar, seminarCost);
+
+                                    //present option to save this seminar to the file
+                                    var saveToFile = MessageBox.Show("Would you like to save this seminar to the file?", "Save to file?", MessageBoxButtons.YesNo);
+                                    if (saveToFile == DialogResult.Yes)
+                                    {
+                                        using (StreamWriter file = new StreamWriter(seminarFile, true))
+                                        {
+                                            file.WriteLine(seminar + "," + seminarCost.ToString());
+                                        }
+                                    }
                                 }
                             }
-                            
                         }
-                        
-                        
-                    } //end read file
 
+                        thisGroup.participantList[participantIndex].totalCost += seminarCost;
+                        
+                           
+                    } //end reading file and creating groups and particiapnts
+
+                    //calculate totals for Group and Client
+                    foreach (Group group in groupList)
+                    {
+                        foreach (Participant participant in group.participantList)
+                        {
+                            group.numberSeminars += participant.seminarList.Count();
+                            group.totalCost += participant.totalCost;
+                        }
+
+                        clientNumberParticipants += group.participantList.Count();
+                        clientNumberSeminars += group.numberSeminars;
+                        clientTotalCost += group.totalCost;
+
+                    }
+
+                    //fill combo box with groups, and select the first group, which will fill the participant list
+                    //select the first participant, which will fill the seminar list and the participant and group info boxes
+                    //fill the client info boxes
                     cmbGroups.Items.Clear();
                     foreach (Group thisGroup in groupList)
                     {
                         cmbGroups.Items.Add(thisGroup.name);
                     }
                     cmbGroups.SelectedIndex = 0;
-                    //cmbGroups_SelectedIndexChanged(sender, e);
                     lstParticipants.SelectedIndex = 0;
-                    //lstParticipants_SelectedIndexChanged(sender, e);
+                    lblClientParticipants.Text = clientNumberParticipants.ToString();
+                    lblClientSeminars.Text = clientNumberSeminars.ToString();
+                    lblClientTotalCost.Text = clientTotalCost.ToString("C2");
 
                 } //end try
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error: Could not read file. Original error: " + ex.Message);
                 }
-            } //end open dialog
+            } //end file selection 
+
+
 
         } //end btnOpenFile_Click()
 
@@ -193,14 +232,20 @@ namespace Kyleen_Project
         private void lstParticipants_SelectedIndexChanged(object sender, EventArgs e)
         {
             lstSeminars.Items.Clear();
-            Participant thisParticipant = groupList[cmbGroups.SelectedIndex].participantList[lstParticipants.SelectedIndex];
-            for (int index = 0; index < thisParticipant.seminarList.Count(); index++)
+            Group selectedGroup = groupList[cmbGroups.SelectedIndex];
+            Participant selectedParticipant = selectedGroup.participantList[lstParticipants.SelectedIndex];
+
+            for (int index = 0; index < selectedParticipant.seminarList.Count(); index++)
             {
-                lstSeminars.Items.Add(thisParticipant.seminarList[index]);
+                lstSeminars.Items.Add(selectedParticipant.seminarList[index]);
             }
 
-            lblNumSeminars.Text = thisParticipant.seminarList.Count.ToString();
-            lblTotalCost.Text = thisParticipant.totalCost.ToString("C2");
+            lblParticipantSeminars.Text = selectedParticipant.seminarList.Count.ToString();
+            lblParticipantTotalCost.Text = selectedParticipant.totalCost.ToString("C2");
+            lblGroupParticipants.Text = selectedGroup.participantList.Count().ToString();
+            lblGroupSeminars.Text = selectedGroup.numberSeminars.ToString();
+            lblGroupTotalCost.Text = selectedGroup.totalCost.ToString("C2");
+
             if (validAmountPaid)
                 fillSavingsBoxes();
 
@@ -227,44 +272,33 @@ namespace Kyleen_Project
             }
             else
             {
-                int group;
-                int participant;
-
                 validAmountPaid = true;
-                clientSaved = 0;
-                txtAmountPaid.Text = amountPaid.ToString("C2");
-                
-                for (group = 0; group < groupList.Count(); group++)
-                {
-                    Group thisGroup = groupList[group];
-                    thisGroup.amountSaved = 0;
-                    for (participant = 0; participant < thisGroup.participantList.Count(); participant++)
-                    {
-                        Participant thisParticipant = thisGroup.participantList[participant];
-                        double amountSaved = thisParticipant.totalCost - amountPaid;
-                        thisParticipant.amountSaved = amountSaved;
-                        thisGroup.amountSaved += amountSaved;
-                        
-                    }
-                    clientSaved += thisGroup.amountSaved;
-                    
-                }
 
                 fillSavingsBoxes();
-
-            } //end actions for valid cost given
-
-
+            } 
         } //end btnCalculate_Click()
 
         private void fillSavingsBoxes()
         {
             Group selectedGroup = groupList[cmbGroups.SelectedIndex];
             Participant selectedParticipant = selectedGroup.participantList[lstParticipants.SelectedIndex];
+            double amountPaid;
 
-            lblParticipantSaved.Text = selectedParticipant.amountSaved.ToString("C2");
-            lblGroupSaved.Text = selectedGroup.amountSaved.ToString("C2");
-            lblClientSaved.Text = clientSaved.ToString("C2");
+            Double.TryParse(txtAmountPaid.Text, out amountPaid);
+
+            lblParticipantSaved.Text = (selectedParticipant.totalCost - amountPaid).ToString("C2");
+            lblGroupSaved.Text = (selectedGroup.totalCost - (amountPaid * selectedGroup.participantList.Count())).ToString("C2");
+            lblClientSaved.Text = (clientTotalCost - (amountPaid * clientNumberParticipants)).ToString("C2");
+
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit?", MessageBoxButtons.YesNo);
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
+                this.Close();
+            }
         }
 
     } //end class
