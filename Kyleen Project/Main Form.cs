@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Excel;
+using Microsoft.VisualBasic.FileIO;
 
 namespace Kyleen_Project
 {
@@ -17,18 +19,20 @@ namespace Kyleen_Project
         Dictionary<string, double> seminarList = new Dictionary<string, double>();
 
         //vaiables for client
+        string clientName;
         double clientNumberParticipants;
         double clientNumberSeminars;
         double clientTotalCost;
-        //double clientSaved = 0;
+        
         
         bool validAmountPaid;
         string seminarFile = @"seminar costs.csv";
+        
 
         public frmMain()
         {
-            InitializeComponent(); 
-        } 
+            InitializeComponent();       
+        }
 
         private void form_OnLoad(object sender, EventArgs e)
         {
@@ -41,14 +45,17 @@ namespace Kyleen_Project
             else //read seminar costs from file into dictionary
             {
                 double seminarCost = 0;
-                int lineIndex = -1;
-          
-                string[] fileLines = File.ReadAllLines(seminarFile);
-                foreach (string line in fileLines)
-                {
-                    lineIndex += 1;
-                    var values = line.Split(',');
+                //int lineIndex = -1; //for saving file
 
+                TextFieldParser parser = new TextFieldParser(seminarFile);
+                parser.HasFieldsEnclosedInQuotes = true;
+                parser.SetDelimiters(",");
+
+                string[] values;
+
+                while (!parser.EndOfData)
+                {
+                    values = parser.ReadFields();                                 
                     Double.TryParse(values[1], out seminarCost);
 
                     if (seminarCost == 0)
@@ -59,16 +66,19 @@ namespace Kyleen_Project
                             if (result == DialogResult.OK)
                             {
                                 seminarCost = form.input;
+                                /****
                                 var saveToFile = MessageBox.Show("Would you like to change the file to this amount?", "Save to file?", MessageBoxButtons.YesNo);
                                 if (saveToFile == DialogResult.Yes)
                                 {
                                     fileLines[lineIndex] = values[0] + "," + seminarCost;
                                     File.WriteAllLines(seminarFile, fileLines);
                                 }
+                                ******/
                             }
                         }
                     }
 
+                    values[0] = values[0].Substring(1, values[0].Length-2); //remove quotes from class name
                     seminarList.Add(values[0], seminarCost);
 
                 } //end iterating through fileLines
@@ -92,89 +102,117 @@ namespace Kyleen_Project
 
             //get information on particiapnts from file seleted by user
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "csv files (*.csv)|*.csv";
+            openFileDialog1.Filter = "excel files (*.xlsx)|*.xlsx";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    StreamReader sr = new StreamReader(openFileDialog1.FileName);
-                    while (sr.Peek() >= 0)
+                    int rowNumber = -1;
+                    List<string> values = new List<string>();
+
+                    foreach (var worksheet in Workbook.Worksheets(openFileDialog1.FileName))
                     {
-                        var line = sr.ReadLine();
-                        var values = line.Split(',');
-                        name = values[0] + ", " + values[1];
-                        groupName = values[2];
-                        seminar = values[3];
-
-                        //search to see if group is already in list
-                        //and if not, add it
-                        groupIndex = -1;
-
-                        for (index = 0; index < groupList.Count(); index++)
+                        foreach (var row in worksheet.Rows)
                         {
-                            if (groupName == groupList[index].name)
+                            values.Clear();
+                            rowNumber += 1;
+                            foreach (var cell in row.Cells)
                             {
-                                groupIndex = index;
-                                break;
-                            }
-                        }
-
-                        if (groupIndex == -1)
-                        {
-                            Group newGroup = new Group(groupName);
-                            groupList.Add(newGroup);
-                            groupIndex = groupList.Count() - 1;
-                        }
-
-                        //search to see if particpant already exists in group;
-                        //if not, create new participant
-                        //if so, add seminar and cost to that participant
-                        Group thisGroup = groupList[groupIndex];
-                        participantIndex = -1;
-                        for (index = 0; index < thisGroup.participantList.Count(); index++)
-                        {
-                            if (thisGroup.participantList[index].name == name)
-                            {
-                                participantIndex = index;
-                                break;
-                            }
-                        }
-                        if (participantIndex == -1)
-                        {
-                            Participant newParticipant = new Participant(name, groupName);
-                            thisGroup.participantList.Add(newParticipant);
-                            participantIndex = thisGroup.participantList.Count() - 1;
-                        }
-
-                        thisGroup.participantList[participantIndex].seminarList.Add(seminar);
-
-                        if (!seminarList.TryGetValue(seminar, out seminarCost))
-                        {
-                            using (var inputForm = new frmInput("Seminar \"" + seminar + "\" not present in seminar cost file.", "Please enter a valid cost for this seminar"))
-                            {
-                                var inputResult = inputForm.ShowDialog();
-                                if (inputResult == DialogResult.OK)
+                                if (cell != null)
                                 {
-                                    seminarCost = inputForm.input;
-                                    seminarList.Add(seminar, seminarCost);
+                                    values.Add(cell.Text.ToString());                                  
+                                }
+                                else
+                                {
+                                    values.Add("");
+                                }
 
-                                    //present option to save this seminar to the file
-                                    var saveToFile = MessageBox.Show("Would you like to save this seminar to the file?", "Save to file?", MessageBoxButtons.YesNo);
-                                    if (saveToFile == DialogResult.Yes)
+                            }
+
+                            if (rowNumber == 1)
+                            {
+                                clientName = values[1];
+                            }
+                            else if (rowNumber > 2)
+                            {
+                                name = values[0] + ", " + values[1];
+                                groupName = values[3];
+                                seminar = values[11];
+
+
+                                //search to see if group is already in list
+                                //and if not, add it
+                                groupIndex = -1;
+
+                                for (index = 0; index < groupList.Count(); index++)
+                                {
+                                    if (groupName == groupList[index].name)
                                     {
-                                        using (StreamWriter file = new StreamWriter(seminarFile, true))
+                                        groupIndex = index;
+                                        break;
+                                    }
+                                }
+
+                                if (groupIndex == -1)
+                                {
+                                    Group newGroup = new Group(groupName);
+                                    groupList.Add(newGroup);
+                                    groupIndex = groupList.Count() - 1;
+                                }
+
+                                //search to see if particpant already exists in group;
+                                //if not, create new participant
+                                //if so, add seminar and cost to that participant
+                                Group thisGroup = groupList[groupIndex];
+                                participantIndex = -1;
+                                for (index = 0; index < thisGroup.participantList.Count(); index++)
+                                {
+                                    if (thisGroup.participantList[index].name == name)
+                                    {
+                                        participantIndex = index;
+                                        break;
+                                    }
+                                }
+                                if (participantIndex == -1)
+                                {
+                                    Participant newParticipant = new Participant(name, groupName);
+                                    thisGroup.participantList.Add(newParticipant);
+                                    participantIndex = thisGroup.participantList.Count() - 1;
+                                }
+
+                                thisGroup.participantList[participantIndex].seminarList.Add(seminar);
+
+                                if (!seminarList.TryGetValue(seminar, out seminarCost))
+                                {
+                                    using (var inputForm = new frmInput("Seminar \"" + seminar + "\" not present in seminar cost file.", "Please enter a valid cost for this seminar"))
+                                    {
+                                        var inputResult = inputForm.ShowDialog();
+                                        if (inputResult == DialogResult.OK)
                                         {
-                                            file.WriteLine(seminar + "," + seminarCost.ToString());
+                                            seminarCost = inputForm.input;
+                                            seminarList.Add(seminar, seminarCost);
+
+
+                                            //present option to save this seminar to the file
+                                            var saveToFile = MessageBox.Show("Would you like to save this seminar to the file?", "Save to file?", MessageBoxButtons.YesNo);
+                                            if (saveToFile == DialogResult.Yes)
+                                            {
+                                                using (StreamWriter file = new StreamWriter(seminarFile, true))
+                                                {
+                                                    seminar = "\"\"\"" + seminar + "\"\"\"";
+                                                    file.WriteLine(seminar + "," + seminarCost.ToString());
+                                                }
+                                            }
+
                                         }
                                     }
                                 }
-                            }
-                        }
 
-                        thisGroup.participantList[participantIndex].totalCost += seminarCost;
-                        
-                           
+                                thisGroup.participantList[participantIndex].totalCost += seminarCost;
+                            }
+                            
+                        } //end iteration through rows in worksheet.Rows   
                     } //end reading file and creating groups and particiapnts
 
                     //calculate totals for Group and Client
@@ -200,6 +238,7 @@ namespace Kyleen_Project
                     {
                         cmbGroups.Items.Add(thisGroup.name);
                     }
+                    lblClientName.Text = clientName;
                     cmbGroups.SelectedIndex = 0;
                     lstParticipants.SelectedIndex = 0;
                     lblClientParticipants.Text = clientNumberParticipants.ToString();
@@ -289,7 +328,6 @@ namespace Kyleen_Project
             lblParticipantSaved.Text = (selectedParticipant.totalCost - amountPaid).ToString("C2");
             lblGroupSaved.Text = (selectedGroup.totalCost - (amountPaid * selectedGroup.participantList.Count())).ToString("C2");
             lblClientSaved.Text = (clientTotalCost - (amountPaid * clientNumberParticipants)).ToString("C2");
-
         }
 
         private void btnExit_Click(object sender, EventArgs e)

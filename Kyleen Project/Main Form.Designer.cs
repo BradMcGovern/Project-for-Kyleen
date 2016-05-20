@@ -67,6 +67,7 @@
             this.label25 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.lblClientTotalCost = new System.Windows.Forms.Label();
+            this.lblClientName = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -77,7 +78,7 @@
             this.btnExit.Location = new System.Drawing.Point(828, 385);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 39);
-            this.btnExit.TabIndex = 5;
+            this.btnExit.TabIndex = 8;
             this.btnExit.Text = "E&xit";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -88,7 +89,7 @@
             this.lstParticipants.Location = new System.Drawing.Point(27, 147);
             this.lstParticipants.Name = "lstParticipants";
             this.lstParticipants.Size = new System.Drawing.Size(129, 277);
-            this.lstParticipants.TabIndex = 8;
+            this.lstParticipants.TabIndex = 4;
             this.lstParticipants.SelectedIndexChanged += new System.EventHandler(this.lstParticipants_SelectedIndexChanged);
             // 
             // lblParticipantTotalCost
@@ -181,7 +182,7 @@
             this.cmbGroups.Location = new System.Drawing.Point(27, 95);
             this.cmbGroups.Name = "cmbGroups";
             this.cmbGroups.Size = new System.Drawing.Size(208, 21);
-            this.cmbGroups.TabIndex = 19;
+            this.cmbGroups.TabIndex = 2;
             this.cmbGroups.SelectedIndexChanged += new System.EventHandler(this.cmbGroups_SelectedIndexChanged);
             // 
             // lstSeminars
@@ -191,14 +192,15 @@
             this.lstSeminars.Name = "lstSeminars";
             this.lstSeminars.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.lstSeminars.Size = new System.Drawing.Size(185, 277);
-            this.lstSeminars.TabIndex = 20;
+            this.lstSeminars.TabIndex = 12;
+            this.lstSeminars.TabStop = false;
             // 
             // btnOpenFile
             // 
             this.btnOpenFile.Location = new System.Drawing.Point(368, 385);
             this.btnOpenFile.Name = "btnOpenFile";
             this.btnOpenFile.Size = new System.Drawing.Size(95, 39);
-            this.btnOpenFile.TabIndex = 22;
+            this.btnOpenFile.TabIndex = 0;
             this.btnOpenFile.Text = "&Load File";
             this.btnOpenFile.UseVisualStyleBackColor = true;
             this.btnOpenFile.Click += new System.EventHandler(this.btnOpenFile_Click);
@@ -210,7 +212,7 @@
             this.label8.Location = new System.Drawing.Point(23, 67);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(54, 20);
-            this.label8.TabIndex = 24;
+            this.label8.TabIndex = 1;
             this.label8.Text = "&Group";
             // 
             // label14
@@ -220,7 +222,7 @@
             this.label14.Location = new System.Drawing.Point(23, 124);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(92, 20);
-            this.label14.TabIndex = 25;
+            this.label14.TabIndex = 3;
             this.label14.Text = "&Participants";
             // 
             // label15
@@ -230,15 +232,15 @@
             this.label15.Location = new System.Drawing.Point(158, 124);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(124, 20);
-            this.label15.TabIndex = 26;
-            this.label15.Text = "&Seminars Taken";
+            this.label15.TabIndex = 13;
+            this.label15.Text = "Seminars Taken";
             // 
             // btnCalculate
             // 
             this.btnCalculate.Location = new System.Drawing.Point(481, 385);
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.Size = new System.Drawing.Size(95, 39);
-            this.btnCalculate.TabIndex = 27;
+            this.btnCalculate.TabIndex = 7;
             this.btnCalculate.Text = "&Calculate Savings";
             this.btnCalculate.UseVisualStyleBackColor = true;
             this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
@@ -250,7 +252,7 @@
             this.label1.Location = new System.Drawing.Point(247, 67);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 20);
-            this.label1.TabIndex = 28;
+            this.label1.TabIndex = 5;
             this.label1.Text = "&Amount Paid";
             // 
             // txtAmountPaid
@@ -259,7 +261,7 @@
             this.txtAmountPaid.Location = new System.Drawing.Point(251, 90);
             this.txtAmountPaid.Name = "txtAmountPaid";
             this.txtAmountPaid.Size = new System.Drawing.Size(96, 26);
-            this.txtAmountPaid.TabIndex = 29;
+            this.txtAmountPaid.TabIndex = 6;
             // 
             // groupBox3
             // 
@@ -471,12 +473,23 @@
             this.lblClientTotalCost.Size = new System.Drawing.Size(100, 26);
             this.lblClientTotalCost.TabIndex = 11;
             // 
+            // lblClientName
+            // 
+            this.lblClientName.AutoSize = true;
+            this.lblClientName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClientName.Location = new System.Drawing.Point(27, 23);
+            this.lblClientName.Name = "lblClientName";
+            this.lblClientName.Size = new System.Drawing.Size(0, 20);
+            this.lblClientName.TabIndex = 32;
+            // 
             // frmMain
             // 
+            this.AcceptButton = this.btnOpenFile;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BackColor = System.Drawing.Color.CornflowerBlue;
             this.ClientSize = new System.Drawing.Size(929, 444);
+            this.Controls.Add(this.lblClientName);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.txtAmountPaid);
@@ -544,6 +557,7 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label lblClientTotalCost;
+        private System.Windows.Forms.Label lblClientName;
     }
 }
 

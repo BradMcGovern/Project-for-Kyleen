@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.txtInput = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
             this.lblMessage1 = new System.Windows.Forms.Label();
             this.lblMessage2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -41,15 +41,15 @@
             this.txtInput.Size = new System.Drawing.Size(100, 20);
             this.txtInput.TabIndex = 0;
             // 
-            // button1
+            // btnOK
             // 
-            this.button1.Location = new System.Drawing.Point(43, 174);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnOK.Location = new System.Drawing.Point(43, 174);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 1;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.button1_Click);
             // 
             // lblMessage1
             // 
@@ -71,13 +71,14 @@
             // 
             // frmInput
             // 
+            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(317, 233);
             this.ControlBox = false;
             this.Controls.Add(this.lblMessage2);
             this.Controls.Add(this.lblMessage1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnOK);
             this.Controls.Add(this.txtInput);
             this.Name = "frmInput";
             this.Text = "InputForm";
@@ -89,7 +90,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtInput;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label lblMessage1;
         private System.Windows.Forms.Label lblMessage2;
     }
