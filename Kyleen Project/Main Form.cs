@@ -55,12 +55,13 @@ namespace Kyleen_Project
 
                 while (!parser.EndOfData)
                 {
-                    values = parser.ReadFields();                                 
+                    values = parser.ReadFields();
+                    values[0] = values[0].Substring(1, values[0].Length - 2); //remove quotes from class name                              
                     Double.TryParse(values[1], out seminarCost);
 
                     if (seminarCost == 0)
                     {
-                        using (var form = new frmInput("Cost for seminar \"" + values[0] + "\" is not a valid decimal number.", "Please enter a valid cost for this seminar"))
+                        using (var form = new frmInput("Cost for seminar is not a valid decimal number:", values[0], "Please enter a valid cost for this seminar"))
                         {
                             var result = form.ShowDialog();
                             if (result == DialogResult.OK)
@@ -78,7 +79,7 @@ namespace Kyleen_Project
                         }
                     }
 
-                    values[0] = values[0].Substring(1, values[0].Length-2); //remove quotes from class name
+                    
                     seminarList.Add(values[0], seminarCost);
 
                 } //end iterating through fileLines
@@ -134,7 +135,7 @@ namespace Kyleen_Project
                             {
                                 clientName = values[1];
                             }
-                            else if (rowNumber > 2)
+                            else if (rowNumber > 2 && values[14] == "Live Seminar")
                             {
                                 name = values[0] + ", " + values[1];
                                 groupName = values[3];
@@ -185,7 +186,7 @@ namespace Kyleen_Project
 
                                 if (!seminarList.TryGetValue(seminar, out seminarCost))
                                 {
-                                    using (var inputForm = new frmInput("Seminar \"" + seminar + "\" not present in seminar cost file.", "Please enter a valid cost for this seminar"))
+                                    using (var inputForm = new frmInput("Seminar not present in seminar cost file:", seminar, "Please enter a valid cost for this seminar"))
                                     {
                                         var inputResult = inputForm.ShowDialog();
                                         if (inputResult == DialogResult.OK)

@@ -14,11 +14,13 @@ namespace Kyleen_Project
     {
         public double input { get; set; }
 
-        public frmInput(string message1, string message2)
+        public frmInput(string message1, string seminar, string message2)
         {
             InitializeComponent();
             lblMessage1.Text = message1;
+            lblSeminar.Text = seminar;
             lblMessage2.Text = message2;
+ 
         }
 
         private void button1_Click(object sender, EventArgs e)

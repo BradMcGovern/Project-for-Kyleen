@@ -75,7 +75,7 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(828, 385);
+            this.btnExit.Location = new System.Drawing.Point(916, 385);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 39);
             this.btnExit.TabIndex = 8;
@@ -86,20 +86,21 @@
             // lstParticipants
             // 
             this.lstParticipants.FormattingEnabled = true;
-            this.lstParticipants.Location = new System.Drawing.Point(27, 147);
+            this.lstParticipants.Location = new System.Drawing.Point(27, 142);
             this.lstParticipants.Name = "lstParticipants";
-            this.lstParticipants.Size = new System.Drawing.Size(129, 277);
+            this.lstParticipants.Size = new System.Drawing.Size(208, 95);
             this.lstParticipants.TabIndex = 4;
             this.lstParticipants.SelectedIndexChanged += new System.EventHandler(this.lstParticipants_SelectedIndexChanged);
             // 
             // lblParticipantTotalCost
             // 
-            this.lblParticipantTotalCost.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblParticipantTotalCost.BackColor = System.Drawing.Color.White;
             this.lblParticipantTotalCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblParticipantTotalCost.Location = new System.Drawing.Point(10, 196);
             this.lblParticipantTotalCost.Name = "lblParticipantTotalCost";
             this.lblParticipantTotalCost.Size = new System.Drawing.Size(100, 26);
             this.lblParticipantTotalCost.TabIndex = 11;
+            this.lblParticipantTotalCost.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox1
             // 
@@ -111,7 +112,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.lblParticipantTotalCost);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(368, 67);
+            this.groupBox1.Location = new System.Drawing.Point(446, 67);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(173, 296);
             this.groupBox1.TabIndex = 16;
@@ -130,12 +131,13 @@
             // 
             // lblParticipantSaved
             // 
-            this.lblParticipantSaved.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblParticipantSaved.BackColor = System.Drawing.Color.White;
             this.lblParticipantSaved.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblParticipantSaved.Location = new System.Drawing.Point(10, 260);
             this.lblParticipantSaved.Name = "lblParticipantSaved";
             this.lblParticipantSaved.Size = new System.Drawing.Size(100, 26);
             this.lblParticipantSaved.TabIndex = 28;
+            this.lblParticipantSaved.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label7
             // 
@@ -149,12 +151,13 @@
             // 
             // lblParticipantSeminars
             // 
-            this.lblParticipantSeminars.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblParticipantSeminars.BackColor = System.Drawing.Color.White;
             this.lblParticipantSeminars.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblParticipantSeminars.Location = new System.Drawing.Point(10, 114);
             this.lblParticipantSeminars.Name = "lblParticipantSeminars";
             this.lblParticipantSeminars.Size = new System.Drawing.Size(100, 26);
             this.lblParticipantSeminars.TabIndex = 26;
+            this.lblParticipantSeminars.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label3
             // 
@@ -179,7 +182,7 @@
             // cmbGroups
             // 
             this.cmbGroups.FormattingEnabled = true;
-            this.cmbGroups.Location = new System.Drawing.Point(27, 95);
+            this.cmbGroups.Location = new System.Drawing.Point(27, 94);
             this.cmbGroups.Name = "cmbGroups";
             this.cmbGroups.Size = new System.Drawing.Size(208, 21);
             this.cmbGroups.TabIndex = 2;
@@ -188,16 +191,16 @@
             // lstSeminars
             // 
             this.lstSeminars.FormattingEnabled = true;
-            this.lstSeminars.Location = new System.Drawing.Point(162, 147);
+            this.lstSeminars.Location = new System.Drawing.Point(27, 264);
             this.lstSeminars.Name = "lstSeminars";
             this.lstSeminars.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lstSeminars.Size = new System.Drawing.Size(185, 277);
+            this.lstSeminars.Size = new System.Drawing.Size(400, 160);
             this.lstSeminars.TabIndex = 12;
             this.lstSeminars.TabStop = false;
             // 
             // btnOpenFile
             // 
-            this.btnOpenFile.Location = new System.Drawing.Point(368, 385);
+            this.btnOpenFile.Location = new System.Drawing.Point(446, 385);
             this.btnOpenFile.Name = "btnOpenFile";
             this.btnOpenFile.Size = new System.Drawing.Size(95, 39);
             this.btnOpenFile.TabIndex = 0;
@@ -209,7 +212,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(23, 67);
+            this.label8.Location = new System.Drawing.Point(23, 66);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(54, 20);
             this.label8.TabIndex = 1;
@@ -219,7 +222,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(23, 124);
+            this.label14.Location = new System.Drawing.Point(23, 118);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(92, 20);
             this.label14.TabIndex = 3;
@@ -229,7 +232,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(158, 124);
+            this.label15.Location = new System.Drawing.Point(23, 240);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(124, 20);
             this.label15.TabIndex = 13;
@@ -237,7 +240,7 @@
             // 
             // btnCalculate
             // 
-            this.btnCalculate.Location = new System.Drawing.Point(481, 385);
+            this.btnCalculate.Location = new System.Drawing.Point(558, 385);
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.Size = new System.Drawing.Size(95, 39);
             this.btnCalculate.TabIndex = 7;
@@ -249,7 +252,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(247, 67);
+            this.label1.Location = new System.Drawing.Point(294, 118);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 20);
             this.label1.TabIndex = 5;
@@ -258,7 +261,7 @@
             // txtAmountPaid
             // 
             this.txtAmountPaid.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAmountPaid.Location = new System.Drawing.Point(251, 90);
+            this.txtAmountPaid.Location = new System.Drawing.Point(298, 142);
             this.txtAmountPaid.Name = "txtAmountPaid";
             this.txtAmountPaid.Size = new System.Drawing.Size(96, 26);
             this.txtAmountPaid.TabIndex = 6;
@@ -275,7 +278,7 @@
             this.groupBox3.Controls.Add(this.label17);
             this.groupBox3.Controls.Add(this.lblGroupTotalCost);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(547, 67);
+            this.groupBox3.Location = new System.Drawing.Point(625, 67);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(175, 296);
             this.groupBox3.TabIndex = 30;
@@ -294,21 +297,23 @@
             // 
             // lblGroupSaved
             // 
-            this.lblGroupSaved.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblGroupSaved.BackColor = System.Drawing.Color.White;
             this.lblGroupSaved.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGroupSaved.Location = new System.Drawing.Point(10, 257);
             this.lblGroupSaved.Name = "lblGroupSaved";
             this.lblGroupSaved.Size = new System.Drawing.Size(100, 26);
             this.lblGroupSaved.TabIndex = 30;
+            this.lblGroupSaved.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblGroupParticipants
             // 
-            this.lblGroupParticipants.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblGroupParticipants.BackColor = System.Drawing.Color.White;
             this.lblGroupParticipants.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGroupParticipants.Location = new System.Drawing.Point(10, 51);
             this.lblGroupParticipants.Name = "lblGroupParticipants";
             this.lblGroupParticipants.Size = new System.Drawing.Size(100, 26);
             this.lblGroupParticipants.TabIndex = 28;
+            this.lblGroupParticipants.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label5
             // 
@@ -332,12 +337,13 @@
             // 
             // lblGroupSeminars
             // 
-            this.lblGroupSeminars.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblGroupSeminars.BackColor = System.Drawing.Color.White;
             this.lblGroupSeminars.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGroupSeminars.Location = new System.Drawing.Point(10, 111);
             this.lblGroupSeminars.Name = "lblGroupSeminars";
             this.lblGroupSeminars.Size = new System.Drawing.Size(100, 26);
             this.lblGroupSeminars.TabIndex = 26;
+            this.lblGroupSeminars.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label16
             // 
@@ -361,12 +367,13 @@
             // 
             // lblGroupTotalCost
             // 
-            this.lblGroupTotalCost.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblGroupTotalCost.BackColor = System.Drawing.Color.White;
             this.lblGroupTotalCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGroupTotalCost.Location = new System.Drawing.Point(10, 193);
             this.lblGroupTotalCost.Name = "lblGroupTotalCost";
             this.lblGroupTotalCost.Size = new System.Drawing.Size(100, 26);
             this.lblGroupTotalCost.TabIndex = 11;
+            this.lblGroupTotalCost.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox4
             // 
@@ -380,7 +387,7 @@
             this.groupBox4.Controls.Add(this.label26);
             this.groupBox4.Controls.Add(this.lblClientTotalCost);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(728, 67);
+            this.groupBox4.Location = new System.Drawing.Point(816, 67);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(175, 296);
             this.groupBox4.TabIndex = 31;
@@ -389,12 +396,13 @@
             // 
             // lblClientSaved
             // 
-            this.lblClientSaved.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblClientSaved.BackColor = System.Drawing.Color.White;
             this.lblClientSaved.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClientSaved.Location = new System.Drawing.Point(10, 260);
             this.lblClientSaved.Name = "lblClientSaved";
             this.lblClientSaved.Size = new System.Drawing.Size(100, 26);
             this.lblClientSaved.TabIndex = 32;
+            this.lblClientSaved.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label19
             // 
@@ -408,12 +416,13 @@
             // 
             // lblClientParticipants
             // 
-            this.lblClientParticipants.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblClientParticipants.BackColor = System.Drawing.Color.White;
             this.lblClientParticipants.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClientParticipants.Location = new System.Drawing.Point(10, 51);
             this.lblClientParticipants.Name = "lblClientParticipants";
             this.lblClientParticipants.Size = new System.Drawing.Size(100, 26);
             this.lblClientParticipants.TabIndex = 28;
+            this.lblClientParticipants.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label22
             // 
@@ -437,12 +446,13 @@
             // 
             // lblClientSeminars
             // 
-            this.lblClientSeminars.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblClientSeminars.BackColor = System.Drawing.Color.White;
             this.lblClientSeminars.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClientSeminars.Location = new System.Drawing.Point(10, 111);
             this.lblClientSeminars.Name = "lblClientSeminars";
             this.lblClientSeminars.Size = new System.Drawing.Size(100, 26);
             this.lblClientSeminars.TabIndex = 26;
+            this.lblClientSeminars.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label25
             // 
@@ -466,20 +476,21 @@
             // 
             // lblClientTotalCost
             // 
-            this.lblClientTotalCost.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblClientTotalCost.BackColor = System.Drawing.Color.White;
             this.lblClientTotalCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClientTotalCost.Location = new System.Drawing.Point(10, 193);
             this.lblClientTotalCost.Name = "lblClientTotalCost";
             this.lblClientTotalCost.Size = new System.Drawing.Size(100, 26);
             this.lblClientTotalCost.TabIndex = 11;
+            this.lblClientTotalCost.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblClientName
             // 
             this.lblClientName.AutoSize = true;
-            this.lblClientName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClientName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClientName.Location = new System.Drawing.Point(27, 23);
             this.lblClientName.Name = "lblClientName";
-            this.lblClientName.Size = new System.Drawing.Size(0, 20);
+            this.lblClientName.Size = new System.Drawing.Size(0, 31);
             this.lblClientName.TabIndex = 32;
             // 
             // frmMain
@@ -488,7 +499,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.ClientSize = new System.Drawing.Size(929, 444);
+            this.ClientSize = new System.Drawing.Size(1012, 444);
             this.Controls.Add(this.lblClientName);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
